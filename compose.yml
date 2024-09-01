@@ -1,0 +1,29 @@
+services:
+  database:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=12345
+      - POSTGRES_DB=shop
+    restart: always
+    volumes:
+      - database:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    depends_on:
+      - database
+    ports:
+      - "8080:80"
+    restart: always
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=12345
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+
+volumes:
+  database:
+  pgadmin:
